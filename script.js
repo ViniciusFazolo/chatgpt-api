@@ -16,7 +16,7 @@ form.addEventListener("submit", (e) => {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
 
-  fetch("http://localhost:8080/getResponse", {
+  fetch("http://localhost:8080/chat/getResponse", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
