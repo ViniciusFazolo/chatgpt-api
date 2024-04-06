@@ -36,8 +36,36 @@ form button{
     cursor: pointer;
 }
 
+#limpar{
+    background-color: transparent;
+    border: 1px solid rgb(76, 127, 236);
+    color: black;
+}
+
 main{
     width: 400px;
     margin: 0 auto;
     height: 100%;
+}
+
+.spinner{
+    display: none;
+    justify-content: center;
+}
+
+.spinner i{
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.text-result{
+    margin: 20px 0;
 }

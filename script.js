@@ -1,8 +1,14 @@
+//variables
+
 const form = document.querySelector("#form");
 const txtArea = document.querySelector("#form textarea")
 const errorMessage = document.querySelector("#form small")
+const spinner = document.querySelector(".spinner")
+const clear = document.querySelector("#limpar")
 
-form.addEventListener("submit", (e) => {
+//events
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   
@@ -16,22 +22,39 @@ form.addEventListener("submit", (e) => {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
 
-  fetch("http://localhost:8080/chat/getResponse", {
+  spinner.style.display = "flex"
+
+  await fetch("http://localhost:8080/chat/getResponse", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  }).then((res) => res.json())
-    .then(data => insertDataInHtml(data));
-});
+  })
+    .then((res) => res.json())
+    .then(data => {
+      insertDataInHtml(data)
+      spinner.style.display = ""
+    });
+  });
+
+clear.addEventListener("click", () => {
+  document.querySelector("#main").innerHTML = ""
+})
+
+//functions
 
 function insertDataInHtml(data) {
   const mainContainer = document.querySelector("#main");
 
-  mainContainer.innerHTML = `
-    ${data.result.output.content}
+  mainContainer.innerHTML += `
+    <p class="text-result">
+      ${data?.result.output.content}
+    </p>
+    <hr>
   `;
+
+  txtArea.value = ''
 }
 
 function nullValueError(error){
